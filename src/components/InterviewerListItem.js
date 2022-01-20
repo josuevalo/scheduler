@@ -11,9 +11,7 @@ const interviewImageClass = classNames("interviewers__item-image", { "interviewe
 
   return (
 
-   
-
-    <li onClick={ () => props.setInterviewer(props.id) } className={ interviewClass }>
+    <li className={ interviewClass } onClick={ props.setInterviewer }>
   <img
     className={ interviewImageClass }
     src={ props.avatar }
