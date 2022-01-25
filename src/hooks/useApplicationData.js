@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 
 export default function useApplicationData(initial) {
@@ -27,19 +28,20 @@ export default function useApplicationData(initial) {
     return axios.put(`/api/appointments/${id}`, {
       interview
     })
-    .then(function(response) {
-      setState({
-        ...state,
-        appointments
-      });
-  
-    })
+      .then(function (response) {
+        setState({
+          ...state,
+          appointments
+        });
+        updateSpots();
+
+      })
   }
 
   const cancelInterview = function (id) {
     const appointment = {
       ...state.appointments[id],
-      interview: {student: null, interviewer: null}
+      interview: null
     };
     const appointments = {
       ...state.appointments,
@@ -47,14 +49,42 @@ export default function useApplicationData(initial) {
     };
 
     return axios.delete(`/api/appointments/${id}`)
-    .then(function(response) {
-      setState({
-        ...state,
-        appointments
-      });
-    })
+      .then(function (response) {
+        setState({
+          ...state,
+          appointments
+        });
+        updateSpots() 
+      })
 
   }
+
+  const updateSpots = function () {
+    const findSpots = state.days.map(day => {
+      const appointments = getAppointmentsForDay(state, day.name);
+      console.log("appointments", appointments)
+      const count = appointments.filter(appointment => appointment.interview === null).length;
+
+      return {...day, spots: count }
+    });
+
+    return findSpots;
+  };
+
+  useEffect(() => {
+    const days = updateSpots();
+    setState((prev) => ({ ...prev, days }));
+  }, [state.appointments])
+  
+
+
+
+  // / RESET THE DATABASE ///
+  // axios.get ('/api/debug/reset')
+  
+
+
+  
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -73,5 +103,5 @@ export default function useApplicationData(initial) {
   }, []);
 
 
-return { state, setDay, bookInterview, cancelInterview }
+  return { state, setDay, bookInterview, cancelInterview }
 }

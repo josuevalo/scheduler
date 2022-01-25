@@ -15,11 +15,6 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-
-/// RESET THE DATABASE ///
-  //  axios.get ('/api/debug/reset')
-
-
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const interviewers = getInterviewersForDay(state, state.day)
   const arrayOfAppointments = dailyAppointments.map(appointment => {
