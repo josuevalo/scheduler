@@ -38,7 +38,6 @@ export default function Application(props) {
       interview
     })
     .then(function(response) {
-      console.log("WHAT GETS RETURNED?????", response)
       setState({
         ...state,
         appointments
@@ -47,6 +46,38 @@ export default function Application(props) {
     })
 
   }
+
+  const cancelInterview = function (id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments
+    });
+
+    return axios.put(`/api/appointments/${id}`, {
+      interview
+    })
+    .then(function(response) {
+      setState({
+        ...state,
+        appointments
+      });
+  
+    })
+
+  }
+
+/// RESET THE DATABASE ///
+  //  axios.get ('/api/debug/reset')
+  
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const interviewers = getInterviewersForDay(state, state.day)
@@ -60,6 +91,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     )
   });
