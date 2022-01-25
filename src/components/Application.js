@@ -62,9 +62,7 @@ export default function Application(props) {
       appointments
     });
 
-    return axios.put(`/api/appointments/${id}`, {
-      interview
-    })
+    return axios.delete(`/api/appointments/${id}`)
     .then(function(response) {
       setState({
         ...state,
@@ -77,7 +75,7 @@ export default function Application(props) {
 
 /// RESET THE DATABASE ///
   //  axios.get ('/api/debug/reset')
-  
+
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const interviewers = getInterviewersForDay(state, state.day)
