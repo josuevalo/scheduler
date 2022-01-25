@@ -84,7 +84,7 @@ export default function useApplicationData(initial) {
   
 
 
-  
+
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
