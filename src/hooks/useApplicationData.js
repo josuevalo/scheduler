@@ -33,7 +33,6 @@ export default function useApplicationData(initial) {
           ...state,
           appointments
         });
-        updateSpots();
 
       })
   }
@@ -54,7 +53,7 @@ export default function useApplicationData(initial) {
           ...state,
           appointments
         });
-        updateSpots() 
+      
       })
 
   }
