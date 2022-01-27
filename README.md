@@ -7,6 +7,14 @@ The following stack is used with this project:
 * Axios
 * Storybook, Webpack Dev Server, Jest, Testing Library
 
+## Screenshots
+
+!["Screenshot of adding appointment"](https://github.com/josuevalo/scheduler/blob/master/docs/add-appointment.png?raw=true)
+
+!["Screenshot of edit/delete options on a highlighted appointment"](https://github.com/josuevalo/scheduler/blob/master/docs/edit-delete-options.png?raw=true)
+
+!["Screenshot of deleting appointment"](https://github.com/josuevalo/scheduler/blob/master/docs/delete-appointment.png?raw=true)
+
 ## Setup
 
 Install dependencies with `npm install`.
