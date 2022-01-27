@@ -1,9 +1,9 @@
 import React from "react";
-import "./styles.scss"
+import "./styles.scss";
+import useVisualMode from "hooks/useVisualMode";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
-import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
@@ -20,59 +20,53 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-
-
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY
+    props.interview ? SHOW : EMPTY,
   );
 
   function save(name, interviewer) {
     const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
-    transition(SAVING)
+    transition(SAVING);
 
     props
       .bookInterview(props.id, interview)
-      .then(function (response) {
-        console.log(response);
-        transition(SHOW)
+      .then((response) => {
+        transition(SHOW);
       })
-      .catch(function (error) {
-        console.log("BookInterview", error);
-        error_save()
+      .catch((error) => {
+        error_save();
       });
   }
 
   function edit() {
-    transition(EDIT)
+    transition(EDIT);
   }
 
   function confirmDelete() {
-    transition(CONFIRM)
+    transition(CONFIRM);
   }
 
   function error_save() {
-    transition(ERROR_SAVE, true)
+    transition(ERROR_SAVE, true);
   }
 
   function error_delete() {
-    transition(ERROR_DELETE, true)
+    transition(ERROR_DELETE, true);
   }
 
   function cancelInterviewAndDelete() {
-
-    transition(DELETING)
+    transition(DELETING);
 
     props.cancelInterview(props.id)
-      .then(function (response) {
-        transition(EMPTY)
+      .then((response) => {
+        transition(EMPTY);
       })
-      .catch(function (error) {
-        console.log("cancelInterview", error);
-        error_delete()
+      .catch((error) => {
+        error_delete();
       });
   }
 
@@ -118,23 +112,23 @@ export default function Appointment(props) {
       )}
       {mode === CONFIRM && (
         <Confirm
-          message={"Are you sure you would like to delete?"}
+          message="Are you sure you would like to delete?"
           onConfirm={cancelInterviewAndDelete}
           onCancel={back}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message={"Oops! Something went wrong and the appointment could not be saved"}
+          message="Oops! Something went wrong and the appointment could not be saved"
           onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message={"Oops! Something went wrong and the appointment could not be deleted"}
+          message="Oops! Something went wrong and the appointment could not be deleted"
           onClose={back}
         />
       )}
     </article>
-  )
+  );
 }
