@@ -9,6 +9,7 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
+// Transition variables //
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -20,8 +21,8 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 
-export default function Appointment(props) {
 
+export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -67,7 +68,6 @@ export default function Appointment(props) {
 
     props.cancelInterview(props.id)
       .then(function (response) {
-        console.log(response);
         transition(EMPTY)
       })
       .catch(function (error) {
@@ -125,17 +125,16 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message={"Oops! Something went wrong"}
+          message={"Oops! Something went wrong and the appointment could not be saved"}
           onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message={"Oops! Something went wrong"}
+          message={"Oops! Something went wrong and the appointment could not be deleted"}
           onClose={back}
         />
       )}
     </article>
   )
 }
-

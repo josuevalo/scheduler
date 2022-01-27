@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getAppointmentsForDay } from "helpers/selectors";
@@ -33,7 +34,6 @@ export default function useApplicationData(initial) {
           ...state,
           appointments
         });
-
       })
   }
 
@@ -53,9 +53,7 @@ export default function useApplicationData(initial) {
           ...state,
           appointments
         });
-      
       })
-
   }
 
   const updateSpots = function () {
@@ -64,7 +62,7 @@ export default function useApplicationData(initial) {
       console.log("appointments", appointments)
       const count = appointments.filter(appointment => appointment.interview === null).length;
 
-      return {...day, spots: count }
+      return { ...day, spots: count }
     });
 
     return findSpots;
@@ -74,14 +72,6 @@ export default function useApplicationData(initial) {
     const days = updateSpots();
     setState((prev) => ({ ...prev, days }));
   }, [state.appointments])
-  
-
-
-
-  // / RESET THE DATABASE ///
-  // axios.get ('/api/debug/reset')
-  
-
 
 
   useEffect(() => {
