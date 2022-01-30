@@ -7,6 +7,9 @@ The following stack is used with this project:
 * Axios
 * Storybook, Webpack Dev Server, Jest, Testing Library
 
+This application connects to the Scheduler API server.
+A repo and setup instructions can be found at: https://github.com/lighthouse-labs/scheduler-api
+
 ## Screenshots
 
 !["Screenshot of adding appointment"](https://github.com/josuevalo/scheduler/blob/master/docs/add-appointment.png?raw=true)

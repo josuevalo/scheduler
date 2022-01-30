@@ -5,16 +5,22 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
   function transition(newMode, replace = false) {
-    if (replace) {
-      history.pop();
-    }
-    setHistory([...history, newMode]);
     setMode(newMode);
+    if (replace) {
+      setHistory((prev) => {
+        const sliced = prev.slice(0, prev.length - 1);
+        return [...sliced, newMode];
+      });
+    } else {
+      setHistory((prev) => [...prev, newMode]);
+    }
   }
+
   function back() {
     if (history.length > 1) {
-      history.pop();
-      setMode(history[history.length - 1]);
+      const sliced = history.slice(0, history.length - 1);
+      setHistory(sliced);
+      setMode(sliced[sliced.length - 1]);
     }
   }
 

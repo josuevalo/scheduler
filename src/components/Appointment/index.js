@@ -21,8 +21,9 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+ const { interview, interviewers, time, bookInterview, id, cancelInterview } = props;
   const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY,
+    interview ? SHOW : EMPTY,
   );
 
   function save(name, interviewer) {
@@ -32,8 +33,8 @@ export default function Appointment(props) {
     };
     transition(SAVING);
 
-    props
-      .bookInterview(props.id, interview)
+  
+      bookInterview(id, interview)
       .then((response) => {
         transition(SHOW);
       })
@@ -59,9 +60,9 @@ export default function Appointment(props) {
   }
 
   function cancelInterviewAndDelete() {
-    transition(DELETING);
+    transition(DELETING, true);
 
-    props.cancelInterview(props.id)
+    cancelInterview(id)
       .then((response) => {
         transition(EMPTY);
       })
@@ -73,29 +74,29 @@ export default function Appointment(props) {
   return (
     <article className="appointment">
       <Header
-        time={props.time}
+        time={time}
       />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === CREATE && (
         <Form
-          interviewers={props.interviewers}
+          interviewers={interviewers}
           onCancel={back}
           onSave={save}
         />
       )}
       {mode === EDIT && (
         <Form
-          interviewers={props.interviewers}
-          interviewer={props.interview.interviewer.id}
-          student={props.interview.student}
+          interviewers={interviewers}
+          interviewer={interview.interviewer.id}
+          student={interview.student}
           onCancel={back}
           onSave={save}
         />
       )}
       {mode === SHOW && (
         <Show
-          student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          student={interview.student}
+          interviewer={interview.interviewer}
           onDelete={confirmDelete}
           onEdit={edit}
         />
